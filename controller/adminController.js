@@ -1,11 +1,13 @@
 const UserModel = require("../models/userModel");
 const Transaction = require("../models/transactionModel");
+const Evaluation = require("../models/evalutionModel");
 
 // Lấy tổng hợp số liệu dashboard
 exports.getDashboardStats = async (req, res) => {
   try {
     const totalUsers = await UserModel.countDocuments();
     const totalTransactions = await Transaction.countDocuments();
+    const totalEvaluations = await Evaluation.countDocuments();
     const totalRevenue = await Transaction.aggregate([
       { $match: { status: "success" } },
       { $group: { _id: null, sum: { $sum: "$amount" } } }
@@ -21,6 +23,7 @@ exports.getDashboardStats = async (req, res) => {
     res.json({
       totalUsers,
       totalTransactions,
+      totalEvaluations,
       revenue,
       packageStats
     });
