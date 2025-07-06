@@ -5,8 +5,8 @@ const childrenRouter = require('./routers/childrenRouter');
 const thoiGianBieuRouter = require('./routers/thoiGianBieuRouter');
 const scheduleRouter = require('./routers/scheduleRouter');
 const evaluationRouter = require("./routers/evaluationRouter");
-const vnpayRouter = require('./routers/vnpayRouter');
 const adminRouter = require('./routers/adminRouter');
+const payosRouter = require('./routers/payosRouter');
 
 const connectDB = require('./configs/connectDB');
 const errorMiddleHandle = require('./middlewares/errorMiddleWare');
@@ -28,8 +28,8 @@ app.use('/api/children', childrenRouter);
 app.use('/api/thoigianbieu', thoiGianBieuRouter);
 app.use('/api/schedule', scheduleRouter);
 app.use("/api/evaluation", evaluationRouter);
-app.use('/api/vnpay', vnpayRouter);
 app.use('/api/admin', adminRouter);
+app.use('/api/payos', payosRouter);
 
 app.use(errorMiddleHandle);
 
