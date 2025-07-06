@@ -40,9 +40,9 @@ exports.createOrder = async (req, res) => {
       userId
     });
     res.json({ checkoutUrl, orderCode });
-  } catch (err) {
-      console.error('Lỗi tạo đơn hàng PayOS:', err);
-    res.status(500).json({ error: err.message });
+   } catch (err) {
+      console.error('Lỗi tạo đơn hàng PayOS:', err.response ? err.response.data : err);
+    res.status(500).json({ error: err.response ? err.response.data : err.message });
   }
 };
 
