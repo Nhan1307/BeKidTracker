@@ -1,6 +1,6 @@
 const express = require("express");
 const { completeEvaluation, getEvaluationByChildAndDate, updateEvaluation } = require("../controller/evaluationController");
-const authMiddleware = require("../middlewares/errorMiddleWare");
+const authMiddleware = require("../middlewares/authMiddleware");
 
 const router = express.Router();
 

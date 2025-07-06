@@ -5,7 +5,7 @@ const {
   updateThoiGianBieu,
   deleteThoiGianBieu,
 } = require("../controller/thoiGianBieuController");
-const authMiddleware = require("../middlewares/errorMiddleWare");
+const authMiddleware = require("../middlewares/authMiddleware");
 
 const router = express.Router();
 
