@@ -1,6 +1,5 @@
 const axios = require('axios');
 const PayosTransaction = require('../models/payosTransactionModel');
-
 const config = {
   client_id: process.env.PAYOS_CLIENT_ID,
   api_key: process.env.PAYOS_API_KEY,
@@ -16,8 +15,8 @@ exports.createOrder = async (req, res) => {
       amount,
       description,
       orderCode,
-      returnUrl: 'https://bekidtracker-3.onrender.com/payment-success',
-      cancelUrl: 'https://bekidtracker-3.onrender.com/payment-cancel'
+     returnUrl: process.env.PAYOS_RETURN_URL,
+     cancelUrl: process.env.PAYOS_CANCEL_URL,
     };
     const payosRes = await axios.post(
       config.endpoint,
@@ -42,6 +41,7 @@ exports.createOrder = async (req, res) => {
     });
     res.json({ checkoutUrl, orderCode });
   } catch (err) {
+      console.error('Lỗi tạo đơn hàng PayOS:', err);
     res.status(500).json({ error: err.message });
   }
 };
