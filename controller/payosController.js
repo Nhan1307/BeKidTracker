@@ -7,22 +7,31 @@ const config = {
   endpoint: process.env.PAYOS_ENDPOINT
 };
 
+
 exports.createOrder = async (req, res) => {
   try {
     const { amount, description, userId } = req.body;
-    const orderCode = Math.floor(Math.random() * 1000000000).toString();
+    const orderCodeNumber =orderCode? Number(orderCode) : Math.floor(Math.random() * 1000000000);
+    const data = `amount=${amount}&cancelUrl=${process.env.PAYOS_CANCEL_URL}&description=${description}&orderCode=${orderCodeNumber}&returnUrl=${process.env.PAYOS_RETURN_URL}`;
+    const signature = require('crypto')
+      .createHmac('sha256', process.env.PAYOS_CHECKSUM_KEY)
+      .update(data)
+      .digest('hex');
+
+
     const order = {
       amount,
       description,
-      orderCode,
+      orderCode :  orderCodeNumber,
      returnUrl: process.env.PAYOS_RETURN_URL,
      cancelUrl: process.env.PAYOS_CANCEL_URL,
+     signature
     };
     const payosRes = await axios.post(
-      config.endpoint,
-      order,
+      config.endpoint +'/v2/payment-requests',
+      order,  
       {
-        headers: {
+         headers: {
           'x-client-id': config.client_id,
           'x-api-key': config.api_key,
           'Content-Type': 'application/json'
